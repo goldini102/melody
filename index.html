@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Background</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+      transition: background-image 1s ease;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    const apiEndpoint = '$httpGet[https://api.kastg.xyz/api/ai/flux?prompt=space%20theme&ratio=square&key=Kastg_d6SZbujYpCAwptFoGxfK_free]';
+    async function updateBackground() {
+      try {
+        const response = await fetch(apiEndpoint);
+        const data = await response.json();
+        const imageUrl = data.result[0].url;
+        document.body.style.backgroundImage = `url(${imageUrl})`;
+      } catch (error) {
+        console.error('Error fetching image:', error);
+      }
+    }
+    setInterval(updateBackground, 5000);
+    updateBackground();
+  </script>
+</body>
+</html>
